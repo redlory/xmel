@@ -20,15 +20,15 @@
 
 Требования
 ====
-1. Firefox
-2. Greasemonkey 0.8.0+
+1. [Firefox](http://mozilla-russia.org/products/firefox/)
+2. [Greasemonkey](https://addons.mozilla.org/ru/firefox/addon/greasemonkey/) 0.8.0+
 
 Установка
 ====
-1. Открыть файл xmel.user.js в браузере Firefox. Появится диалог установки
+1. Открыть файл [xmel.user.js](https://github.com/redlory/xmel/raw/master/xmel.user.js) в браузере Firefox. Появится диалог установки
 пользовательских скриптов Greasemonkey.
 2. Нажать кнопку "Начать установку".
-3. В адресной строке Firefox ввести about:config.
+3. В адресной строке Firefox ввести [about:config](about:config).
    Возможно Вас предупредят об опасности изменения настроек, нужно пообещать быть осторожным.
    Появится список дополнительных настроек браузера.
 4. Найти greasemonkey.fileIsGreaseable в списке настроек и установить его в true.
