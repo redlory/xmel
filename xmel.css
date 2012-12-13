@@ -1,0 +1,80 @@
+html {
+    font-family: sans-serif;
+}
+
+h1 {
+    font-size: 1.5em;
+}
+
+h2 {
+    font-size: 1.2em;
+    padding-bottom: 0;
+    margin-bottom: 0.1em;
+}
+
+col.balance {
+    background: #E8FFFF;
+}
+
+th {
+    font-size: 1em;
+}
+
+tr.div th {
+    text-align: left;
+    padding-top: 1em;
+}
+
+tr.div td {
+    text-align: left;
+    padding-top: 1em;
+}
+
+tr.div {
+    background: #FFFFCC;
+}
+
+tr.sum {
+    font-weight: bold;
+}
+
+td.code {
+    text-align: center;
+}
+
+td.num {
+    text-align: right;
+}
+
+td.sum {
+    text-align: right;
+    font-weight: bold;
+}
+
+table.form {
+    border: none
+}
+
+table.form th {
+    border: none;
+    text-align: left;
+}
+
+table.form td {
+    border: none;
+    text-align: left;
+}
+
+table {
+    border: solid 1px black; border-spacing: 0; border-collapse: collapse;
+}
+
+td, th {
+    border: solid 1px black;
+    padding: 0.2em 0.4em 0.2em 0.4em;
+}
+
+table.data {
+    font-size: 0.8em;
+}
+

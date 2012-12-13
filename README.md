@@ -20,8 +20,8 @@
 
 Требования
 ====
-1. Firefox (версия >= )
-2. Greasemonkey (версия >= )
+1. Firefox
+2. Greasemonkey 0.8.0+
 
 Установка
 ====
