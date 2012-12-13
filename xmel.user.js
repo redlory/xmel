@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/redlory/xmel/raw/master/xmel.user.js
 // @updateURL   https://github.com/redlory/xmel/raw/master/xmel.meta.js
 // @include     file://*.xml
-// @version     1.0.0
+// @version     1.0.1
 // @resource    xsl xmel.xsl
 // @resource    css xmel.css
 // ==/UserScript==
@@ -28,7 +28,7 @@ function applyXSL () {
     // чтобы через select-of="document('')" получить к нему доступ.
     // Почему-то document('') возращает _обрабатываемый_ документ,
     // а не правила трансформации xsl, как должно быть.
-    document.documentElement.appendChild (document.adoptNode (
+    document.documentElement.appendChild (document.importNode (
         xsl.documentElement));
     
     //трансформировать в html и отобразить
