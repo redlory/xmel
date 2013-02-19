@@ -429,7 +429,7 @@
     </tr>
 </xsl:template>
 
-<!-- ================== Форма 6,7 - Поставки, закупки ====================== -->
+<!-- i================== Форма 8  Перевозки ================================ -->
 
 <xsl:template name="Перевозки">
     <table class="data">
@@ -502,7 +502,10 @@
     <td><xsl:value-of select="../../../../../@П000000000002"/></td>
     <td><xsl:value-of select="../../../../@П000000000004"/></td>
     <xsl:apply-templates select="../../../@ИдПеревозчика"/>
-    <xsl:apply-templates select="../../../@ИдЛицензии"/>
+    <xsl:choose>
+        <xsl:when test="../../../@ИдЛицензии"><xsl:apply-templates select="../../../@ИдЛицензии"/></xsl:when>
+        <xsl:otherwise><xsl:apply-templates select="document('')//lookup:empty/Лицензия"/></xsl:otherwise>
+    </xsl:choose>
     <xsl:apply-templates select="../../@ИдТС"/>
     <td><xsl:value-of select="../@П000000000014"/></td>
     <td><xsl:value-of select="../@П000000000015"/></td>
