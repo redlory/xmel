@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:lookup="local lookup">
+    xmlns:lookup="https://github.com/redlory/xmel/lookup">
 <xsl:output method="html"
     doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
     doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"/>
@@ -355,37 +355,74 @@
     <xsl:param name="report"/>
     <xsl:param name="part"/>
     <table class="data">
-    <tr>
-    <th rowspan="3">№ п/п</th>
-    <th rowspan="3">Вид продукции</th>
-    <th rowspan="3">Код вида продукции</th>
-    <th colspan="3">Сведения о производителе / импортере</th>
-    <th colspan="8">Сведения о получателе</th>
-    <th colspan="3">Уведомление о поставке</th>
-    <th rowspan="3">Дата поставки</th>
-    <th rowspan="3">Номер товарно-транспортной накладной</th>
-    <th rowspan="3">Номер таможенной декларации</th>
-    <th rowspan="3">Объем поставленной продукции</th>
-    </tr>
-    <tr>
-    <th rowspan="2">Наименование производителя/импортера</th>
-    <th rowspan="2">ИНН</th>
-    <th rowspan="2">КПП</th>
-    <th rowspan="2">наименование организации</th>
-    <th rowspan="2">место нахождения</th>
-    <th rowspan="2">ИНН</th>
-    <th rowspan="2">КПП</th>
-    <th colspan="4">лицензия</th>
-    <th rowspan="2">дата</th>
-    <th rowspan="2">номер</th>
-    <th rowspan="2">объем поставки</th>
-    </tr>
-    <tr>
-    <th>серия, номер</th>
-    <th>дата выдачи</th>
-    <th>дата окончания</th>
-    <th>кем выдана</th>
-    </tr>
+    <xsl:choose>
+    <xsl:when test="$report='Поставка'">
+        <tr>
+        <th rowspan="3">№ п/п</th>
+        <th rowspan="3">Вид продукции</th>
+        <th rowspan="3">Код вида продукции</th>
+        <th colspan="3">Сведения о производителе / импортере</th>
+        <th colspan="8">Сведения о получателе</th>
+        <th colspan="3">Уведомление о поставке</th>
+        <th rowspan="3">Дата поставки</th>
+        <th rowspan="3">Номер товарно-транспортной накладной</th>
+        <th rowspan="3">Номер таможенной декларации</th>
+        <th rowspan="3">Объем поставленной продукции</th>
+        </tr>
+        <tr>
+        <th rowspan="2">Наименование производителя/импортера</th>
+        <th rowspan="2">ИНН</th>
+        <th rowspan="2">КПП</th>
+        <th rowspan="2">наименование организации</th>
+        <th rowspan="2">место нахождения</th>
+        <th rowspan="2">ИНН</th>
+        <th rowspan="2">КПП</th>
+        <th colspan="4">лицензия</th>
+        <th rowspan="2">дата</th>
+        <th rowspan="2">номер</th>
+        <th rowspan="2">объем поставки</th>
+        </tr>
+        <tr>
+        <th>серия, номер</th>
+        <th>дата выдачи</th>
+        <th>дата окончания</th>
+        <th>кем выдана</th>
+        </tr>
+    </xsl:when>
+    <xsl:otherwise>
+        <tr>
+        <th rowspan="3">№ п/п</th>
+        <th rowspan="3">Вид продукции</th>
+        <th rowspan="3">Код вида продукции</th>
+        <th colspan="3">Сведения о производителе / импортере</th>
+        <th colspan="8">Сведения о поставщике</th>
+        <th colspan="3">Уведомление о закупке</th>
+        <th rowspan="3">Дата закупки (дата отгрузки поставщиком)</th>
+        <th rowspan="3">Номер товарно-транспортной накладной</th>
+        <th rowspan="3">Номер таможенной декларации</th>
+        <th rowspan="3">Объем закупленной продукции</th>
+        </tr>
+        <tr>
+        <th rowspan="2">Наименование производителя/импортера</th>
+        <th rowspan="2">ИНН</th>
+        <th rowspan="2">КПП</th>
+        <th rowspan="2">наименование организации</th>
+        <th rowspan="2">место нахождения</th>
+        <th rowspan="2">ИНН</th>
+        <th rowspan="2">КПП</th>
+        <th colspan="4">лицензия</th>
+        <th rowspan="2">дата</th>
+        <th rowspan="2">номер</th>
+        <th rowspan="2">объем закупки</th>
+        </tr>
+        <tr>
+        <th>серия, номер</th>
+        <th>дата выдачи</th>
+        <th>дата окончания</th>
+        <th>кем выдана</th>
+        </tr>
+    </xsl:otherwise>
+    </xsl:choose>
     <xsl:for-each select="Документ/ОбъемОборота[
                 @НаличиеПоставки='true' and $part='Поставка' 
                 or @НаличиеЗакупки='true' and $part='Закупка' 
