@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/redlory/xmel/raw/master/xmel.user.js
 // @updateURL   https://github.com/redlory/xmel/raw/master/xmel.meta.js
 // @include     file://*.xml
-// @version     1.0.2
+// @version     1.0.3
 // @resource    xsl xmel.xsl
 // @resource    css xmel.css
 // ==/UserScript==
@@ -38,16 +38,23 @@ function applyXSL () {
 }
 
 if (document.documentElement.nodeName == "Файл") {
+    var form = "";
     var version = document.documentElement.attributes["ВерсФорм"].value;
     var n = document.getElementsByTagName ("ФормаОтч");
-    if (n.length != 1) return;
-    var form = n[0].attributes["НомФорм"].value;
-    if (version == "4.20"
+    if (n.length == 1) form = n[0].attributes["НомФорм"].value;
+    if ((version == "4.20"
             && (   form == "5-о"
                 || form == "6-о"
                 || form == "7-о"
                 || form == "8-о"
                 ))
+        || (version == "4.30"
+            && (   form == "05"
+                || form == "06"
+                || form == "07"
+                || form == "08"
+                ))
+        )
     {
         applyXSL ();
     }

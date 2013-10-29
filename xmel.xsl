@@ -10,6 +10,15 @@
 </xsl:template>
 
 <xsl:template match="/Файл">
+    <xsl:variable name="Form">
+        <xsl:choose>
+            <xsl:when test="ФормаОтч/@НомФорм='5-о'">05</xsl:when>
+            <xsl:when test="ФормаОтч/@НомФорм='6-о'">06</xsl:when>
+            <xsl:when test="ФормаОтч/@НомФорм='7-о'">07</xsl:when>
+            <xsl:when test="ФормаОтч/@НомФорм='8-о'">08</xsl:when>
+            <xsl:otherwise><xsl:value-of select="ФормаОтч/@НомФорм"/></xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
 <html>
 <head>
 <title>Декларация</title>
@@ -19,7 +28,7 @@
 <h1>
     <xsl:call-template name="Lookup">
         <xsl:with-param name="table">Title</xsl:with-param>
-        <xsl:with-param name="key" select="ФормаОтч/@НомФорм"/>
+        <xsl:with-param name="key" select="$Form"/>
     </xsl:call-template>
 </h1>
 
@@ -118,12 +127,14 @@
 
 <h2>Лицензии</h2>
 <table>
-<tr><th>Вид деятельности</th><th>Серия</th><th>Номер</th><th>Дата начала</th><th>Дата окончания</th></tr>
+<xsl:choose>
+<xsl:when test="@ВерсФорм='4.20'">
+    <tr><th>Вид деятельности</th><th>Серия</th><th>Номер</th><th>Дата начала</th><th>Дата окончания</th></tr>
     <xsl:for-each select="Документ/Организация/Лицензии/Лицензия">
         <tr>
         <td>
             <xsl:call-template name="Lookup">
-                <xsl:with-param name="table">BisnessType</xsl:with-param>
+                <xsl:with-param name="table">BisnessType4.20</xsl:with-param>
                 <xsl:with-param name="key" select="@ВидДеят"/>
             </xsl:call-template>
         </td>
@@ -133,16 +144,34 @@
         <td><xsl:value-of select="@ДатаОконЛиц"/></td>
         </tr>
     </xsl:for-each>
+</xsl:when>
+<xsl:otherwise>
+    <tr><th>Вид деятельности</th><th>Серия и номер</th><th>Дата начала</th><th>Дата окончания</th></tr>
+    <xsl:for-each select="Документ/Организация/Деятельность/Лицензируемая/Лицензия">
+        <tr>
+        <td>
+            <xsl:call-template name="Lookup">
+                <xsl:with-param name="table">BisnessType4.30</xsl:with-param>
+                <xsl:with-param name="key" select="@ВидДеят"/>
+            </xsl:call-template>
+        </td>
+        <td><xsl:value-of select="@СерНомЛиц"/></td>
+        <td><xsl:value-of select="@ДатаНачЛиц"/></td>
+        <td><xsl:value-of select="@ДатаОконЛиц"/></td>
+        </tr>
+    </xsl:for-each>
+</xsl:otherwise>
+</xsl:choose>
 </table>
 
 <xsl:choose>
 
-    <xsl:when test="ФормаОтч/@НомФорм='5-о'">
+    <xsl:when test="$Form='05'">
         <h2>Оборот</h2>
         <xsl:call-template name="Оборот"/>
     </xsl:when>
 
-    <xsl:when test="ФормаОтч/@НомФорм='6-о'">
+    <xsl:when test="$Form='06'">
         <h2>Поставки</h2>
         <xsl:call-template name="ПоставкиЗакупки">
             <xsl:with-param name="report">Поставка</xsl:with-param>
@@ -155,7 +184,7 @@
         </xsl:call-template>
     </xsl:when>
 
-    <xsl:when test="ФормаОтч/@НомФорм='7-о'">
+    <xsl:when test="$Form='07'">
         <h2>Закупки</h2>
         <xsl:call-template name="ПоставкиЗакупки">
             <xsl:with-param name="report">Закупка</xsl:with-param>
@@ -168,7 +197,7 @@
         </xsl:call-template>
     </xsl:when>
 
-    <xsl:when test="ФормаОтч/@НомФорм='8-о'">
+    <xsl:when test="$Form='08'">
         <h2>Перевозки</h2>
         <xsl:call-template name="Перевозки"/>
     </xsl:when>
@@ -672,7 +701,7 @@
     </xsl:for-each>
 </xsl:template>
 
-<xsl:key name="BisnessType" match="lookup:bisnessTypes/lookup:bisnessType" use="@code"/>
+<xsl:key name="BisnessType4.20" match="lookup:bisnessTypes/lookup:bisnessType" use="@code"/>
 
 <lookup:bisnessTypes>
     <lookup:bisnessType code="07">Закупка, хранение и поставки алкогольной продукции</lookup:bisnessType>
@@ -684,21 +713,31 @@
     <lookup:bisnessType code="16">Организация, осуществляющая производство и оборот пива и пивных напитков</lookup:bisnessType>
 </lookup:bisnessTypes>
 
+<xsl:key name="BisnessType4.30" match="lookup:bisnessTypes/lookup:bisnessType" use="@code"/>
+
+<lookup:bisnessTypes>
+    <lookup:bisnessType code="01">Производство, хранение и поставки произведенного этилового спирта, в том числе денатурата</lookup:bisnessType>
+    <lookup:bisnessType code="02">Производство, хранение и поставки произведенной алкогольной и спиртосодержащей пищевой продукции</lookup:bisnessType>
+    <lookup:bisnessType code="03">Закупка, хранение и поставки алкогольной и спиртосодержащей продукции</lookup:bisnessType>
+    <lookup:bisnessType code="04"> Производство, хранение и поставки спиртосодержащей непищевой продукции</lookup:bisnessType>
+    <lookup:bisnessType code="05">Хранение этилового спирта, алкогольной и спиртосодержащей пищевой продукции</lookup:bisnessType>
+</lookup:bisnessTypes>
+
 <xsl:key name="Title" match="lookup:titles/lookup:title" use="@code"/>
 
 <lookup:titles>
-    <lookup:title code="1-о" >Декларация об объемах производства и оборота этилового спирта</lookup:title>
-    <lookup:title code="2-о" >Декларация об объемах использования этилового спирта</lookup:title>
-    <lookup:title code="3-о" >Декларация об объемах производства и оборота алкогольной и спиртосодержащей продукции</lookup:title>
-    <lookup:title code="4-о" >Декларация об объемах использования алкогольной и спиртосодержащей продукции</lookup:title>
-    <lookup:title code="5-о" >Декларация об объеме оборота этилового спирта, алкогольной и спиртосодержащей продукции</lookup:title>
-    <lookup:title code="6-о" >Декларация об объемах поставки этилового спирта, алкогольной и спиртосодержащей продукции</lookup:title>
-    <lookup:title code="7-о" >Декларация об объемах закупки этилового спирта, алкогольной и спиртосодержащей продукции</lookup:title>
-    <lookup:title code="8-о" >Декларация о перевозках этилового спирта, алкогольной и спиртосодержащей продукции</lookup:title>
-    <lookup:title code="9-о" >Декларация о перевозках этилового спирта (в том числе денатурированного) и нефасованной спиртосодержащей продукции с содержанием этилового спирта более 25 процентов объема готовой продукции</lookup:title>
-    <lookup:title code="10-о">Декларация об использовании  мощностей по производству этилового спирта и алкогольной продукции</lookup:title>
-    <lookup:title code="11-о">Декларация об объемах розничной продажи алкогольной и спиртосодержащей продукции</lookup:title>
-    <lookup:title code="12-о">Декларация об объемах розничной продажи  пива и пивных напитков</lookup:title>
+    <lookup:title code="01" >Декларация об объемах производства и оборота этилового спирта</lookup:title>
+    <lookup:title code="02" >Декларация об объемах использования этилового спирта</lookup:title>
+    <lookup:title code="03" >Декларация об объемах производства и оборота алкогольной и спиртосодержащей продукции</lookup:title>
+    <lookup:title code="04" >Декларация об объемах использования алкогольной и спиртосодержащей продукции</lookup:title>
+    <lookup:title code="05" >Декларация об объеме оборота этилового спирта, алкогольной и спиртосодержащей продукции</lookup:title>
+    <lookup:title code="06" >Декларация об объемах поставки этилового спирта, алкогольной и спиртосодержащей продукции</lookup:title>
+    <lookup:title code="07" >Декларация об объемах закупки этилового спирта, алкогольной и спиртосодержащей продукции</lookup:title>
+    <lookup:title code="08" >Декларация о перевозках этилового спирта, алкогольной и спиртосодержащей продукции</lookup:title>
+    <lookup:title code="09" >Декларация о перевозках этилового спирта (в том числе денатурированного) и нефасованной спиртосодержащей продукции с содержанием этилового спирта более 25 процентов объема готовой продукции</lookup:title>
+    <lookup:title code="10">Декларация об использовании  мощностей по производству этилового спирта и алкогольной продукции</lookup:title>
+    <lookup:title code="11">Декларация об объемах розничной продажи алкогольной и спиртосодержащей продукции</lookup:title>
+    <lookup:title code="12">Декларация об объемах розничной продажи  пива и пивных напитков</lookup:title>
 </lookup:titles>
 
 <xsl:key name="Product" match="lookup:products/lookup:product" use="@code"/>
