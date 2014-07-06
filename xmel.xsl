@@ -815,6 +815,9 @@
     <lookup:product code="251">Напитки винные с содержанием этилового спирта свыше 25%</lookup:product>
     <lookup:product code="252">Кальвадос</lookup:product>
     <lookup:product code="260">Слабоалкогольная продукция</lookup:product>
+    <lookup:product code="261">Сидр</lookup:product>
+    <lookup:product code="262">Пуаре</lookup:product>
+    <lookup:product code="263">Медовуха</lookup:product>
     <lookup:product code="270">Другие спиртные напитки с содержанием этилового спирта до 25% включительно</lookup:product>
     <lookup:product code="280">Другие спиртные напитки с содержанием этилового спирта свыше 25%</lookup:product>
     <lookup:product code="300">Коньячные спирты</lookup:product>
