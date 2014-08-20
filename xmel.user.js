@@ -5,9 +5,10 @@
 // @downloadURL https://github.com/redlory/xmel/raw/master/xmel.user.js
 // @updateURL   https://github.com/redlory/xmel/raw/master/xmel.meta.js
 // @include     file://*.xml
-// @version     1.0.3
+// @version     1.0.4
 // @resource    xsl xmel.xsl
 // @resource    css xmel.css
+// @grant       GM_getResourceText
 // ==/UserScript==
 
 function applyXSL () {
