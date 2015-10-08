@@ -730,6 +730,11 @@
 <xsl:key name="LicenseCarrier" match="Файл/Справочники/Перевозчики/Лицензии/Лицензия" use="@ИдЛицензии"/>
 <xsl:key name="Vehicle" match="Файл/Справочники/ТранспортныеСредства" use="@ИдТС"/>
 
+<xsl:key name="BisnessType4.20" match="lookup:refs/lookup:bisnessTypes/lookup:bisnessType" use="@code"/>
+<xsl:key name="BisnessType4.30" match="lookup:refs/lookup:bisnessTypes/lookup:bisnessType" use="@code"/>
+<xsl:key name="Title" match="lookup:refs/lookup:titles/lookup:title" use="@code"/>
+<xsl:key name="Product" match="lookup:refs/lookup:products/lookup:product" use="@code"/>
+
 <xsl:template name="Lookup">
     <xsl:param name="table"/>
     <xsl:param name="key"/>
@@ -738,8 +743,7 @@
     </xsl:for-each>
 </xsl:template>
 
-<xsl:key name="BisnessType4.20" match="lookup:bisnessTypes/lookup:bisnessType" use="@code"/>
-
+<lookup:refs>
 <lookup:bisnessTypes>
     <lookup:bisnessType code="07">Закупка, хранение и поставки алкогольной продукции</lookup:bisnessType>
     <lookup:bisnessType code="08">Закупка, хранение и поставки спиртосодержащей пищевой продукции</lookup:bisnessType>
@@ -750,8 +754,6 @@
     <lookup:bisnessType code="16">Организация, осуществляющая производство и оборот пива и пивных напитков</lookup:bisnessType>
 </lookup:bisnessTypes>
 
-<xsl:key name="BisnessType4.30" match="lookup:bisnessTypes/lookup:bisnessType" use="@code"/>
-
 <lookup:bisnessTypes>
     <lookup:bisnessType code="01">Производство, хранение и поставки произведенного этилового спирта, в том числе денатурата</lookup:bisnessType>
     <lookup:bisnessType code="02">Производство, хранение и поставки произведенной алкогольной и спиртосодержащей пищевой продукции</lookup:bisnessType>
@@ -759,8 +761,6 @@
     <lookup:bisnessType code="04"> Производство, хранение и поставки спиртосодержащей непищевой продукции</lookup:bisnessType>
     <lookup:bisnessType code="05">Хранение этилового спирта, алкогольной и спиртосодержащей пищевой продукции</lookup:bisnessType>
 </lookup:bisnessTypes>
-
-<xsl:key name="Title" match="lookup:titles/lookup:title" use="@code"/>
 
 <lookup:titles>
     <lookup:title code="01" >Декларация об объемах производства и оборота этилового спирта</lookup:title>
@@ -776,8 +776,6 @@
     <lookup:title code="11">Декларация об объемах розничной продажи алкогольной и спиртосодержащей продукции</lookup:title>
     <lookup:title code="12">Декларация об объемах розничной продажи  пива и пивных напитков</lookup:title>
 </lookup:titles>
-
-<xsl:key name="Product" match="lookup:products/lookup:product" use="@code"/>
 
 <lookup:products>
     <lookup:product code="010">Спирт-сырец этиловый из пищевого сырья</lookup:product>
@@ -860,6 +858,7 @@
 <lookup:empty>
     <Лицензия/>
 </lookup:empty>
+</lookup:refs>
 
 <xsl:template name="CSS">
     <style>html {}

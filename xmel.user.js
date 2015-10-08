@@ -30,7 +30,8 @@ function applyXSL () {
     // Почему-то document('') возращает _обрабатываемый_ документ,
     // а не правила трансформации xsl, как должно быть.
     document.documentElement.appendChild (document.importNode (
-        xsl.documentElement));
+        xsl.getElementsByTagNameNS ("https://github.com/redlory/xmel/lookup", "refs").item (0),
+        true));
     
     //трансформировать в html и отобразить
     var newDoc = processor.transformToDocument(document);
