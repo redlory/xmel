@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/redlory/xmel/raw/master/xmel.user.js
 // @updateURL   https://github.com/redlory/xmel/raw/master/xmel.meta.js
 // @include     file://*.xml
-// @version     1.0.5
+// @version     1.0.6
 // @resource    xsl xmel.xsl
 // @resource    css xmel.css
 // @grant       GM_getResourceText
@@ -49,7 +49,7 @@ if (document.documentElement.nodeName == "Файл") {
                 || form == "7-о"
                 || form == "8-о"
                 ))
-        || (version == "4.30"
+        || ((version == "4.30" || version == "4.31")
             && (   form == "05"
                 || form == "06"
                 || form == "07"
